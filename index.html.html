@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>탁현지_Culture Business Partner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --blue: #0064FF;
+    --blue-light: #EBF3FF;
+    --blue-mid: #D6E8FF;
+    --text: #191F28;
+    --text-sub: #6B7684;
+    --text-hint: #B0B8C1;
+    --border: #E5E8EB;
+    --bg: #F2F4F6;
+    --white: #FFFFFF;
+    --red: #FF4452;
+    --green: #00B493;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 2rem 1rem;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+  .hero {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border: 1px solid var(--border);
+  }
+  .hero-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--blue-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    border: 2px solid var(--blue-mid);
+  }
+  .hero-name { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.8px; }
+  .hero-role { font-size: 14px; color: var(--blue); font-weight: 600; }
+  .hero-meta { display: flex; margin-top: 12px; }
+  .meta-item { font-size: 12px; color: var(--text-sub); padding: 0 14px; border-right: 1px solid var(--border); }
+  .meta-item:first-child { padding-left: 0; }
+  .meta-item:last-child { border-right: none; }
+  .meta-key { font-size: 10px; color: var(--text-hint); display: block; margin-bottom: 1px; font-weight: 500; letter-spacing: 0.5px; }
+
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; }
+
+  .sec-label { font-size: 10px; font-weight: 700; color: var(--text-hint); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 12px; }
+
+  .info-row { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { font-size: 11px; font-weight: 600; color: var(--blue); padding-top: 2px; }
+  .info-val { font-size: 12px; color: var(--text); line-height: 1.8; }
+  .info-val p { margin-bottom: 8px; }
+  .info-val p:last-child { margin-bottom: 0; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-mid); font-weight: 500; }
+  .pill.gray { background: var(--bg); color: var(--text-sub); border-color: var(--border); }
+
+  .exp-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .exp-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .exp-co { font-size: 15px; font-weight: 700; color: var(--text); }
+  .exp-period { font-size: 11px; color: var(--text-hint); margin-top: 3px; }
+  .exp-right { display: flex; align-items: center; gap: 8px; }
+  .exp-badge { font-size: 11px; padding: 4px 12px; border-radius: 20px; background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-mid); font-weight: 600; }
+  .toggle-btn { font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text-sub); cursor: pointer; font-family: inherit; font-weight: 500; }
+  .toggle-btn:hover { background: var(--border); }
+
+  .case-list { display: flex; flex-direction: column; }
+  .case-row { border-bottom: 1px solid var(--border); overflow: hidden; }
+  .case-row:last-child { border-bottom: none; }
+  .case-header { display: grid; grid-template-columns: 72px 1fr auto 20px; gap: 12px; align-items: center; padding: 14px 24px; cursor: pointer; }
+  .case-header:hover { background: var(--blue-light); }
+  .case-row.open .case-header { background: var(--blue-light); }
+  .case-num { font-size: 10px; font-weight: 700; color: var(--blue); letter-spacing: 0.8px; }
+  .case-title { font-size: 12px; font-weight: 600; color: var(--text); }
+  .case-pills { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .case-pill { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-mid); white-space: nowrap; font-weight: 500; }
+  .case-pill.red { background: #FFF0F1; color: var(--red); border-color: #FFD0D3; }
+  .case-chevron { font-size: 11px; color: var(--text-hint); transition: transform 0.2s; text-align: center; }
+  .case-row.open .case-chevron { transform: rotate(180deg); color: var(--blue); }
+
+  .case-body { display: none; padding: 16px 24px 20px; border-top: 1px solid var(--border); }
+  .case-row.open .case-body { display: flex; flex-direction: column; gap: 8px; }
+
+  .sar-block { border-radius: 10px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); }
+  .sar-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 5px; }
+  .ls .sar-label { color: var(--text-sub); }
+  .lp .sar-label { color: #8B5CF6; }
+  .la .sar-label { color: var(--blue); }
+  .li .sar-label { color: var(--green); }
+  .sar-body { font-size: 11px; color: var(--text-sub); line-height: 1.8; }
+  .sar-body ul { padding-left: 14px; }
+  .sar-body li { margin-bottom: 3px; }
+  .sar-body b { font-weight: 600; color: var(--text); }
+
+  .case-row.fail .case-header:hover { background: #FFF0F1; }
+  .case-row.fail.open .case-header { background: #FFF0F1; }
+  .case-row.fail.open .case-chevron { color: var(--red); }
+  .case-row.fail .case-num { color: var(--red); }
+
+  .edu-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .edu-row:last-child { border-bottom: none; }
+  .edu-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .edu-detail { font-size: 11px; color: var(--text-hint); }
+
+  @media (max-width: 650px) {
+    .info-row { grid-template-columns: 1fr; gap: 4px; }
+    .case-pills { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div class="hero-name">탁현지</div>
+        <div style="width:1px; height:22px; background:var(--border); flex-shrink:0;"></div>
+        <div class="hero-role">Culture Business Partner · HRM · HRD</div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-key">EMAIL</span>cheshire337@naver.com</div>
+        <div class="meta-item"><span class="meta-key">TEL</span>010-9529-2753</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- SUMMARY -->
+  <div class="card">
+    <div class="sec-label">Summary</div>
+    <div class="info-row">
+      <div class="info-key">저는 이런 사람이에요!</div>
+      <div class="info-val">
+        <p>조직문화는 선언이 아니라 <b>습관</b>입니다. 구성원이 매일 반복하는 행동 방식이 곧 그 조직의 문화이고, 그 문화는 임직원 만족도의 문제가 아니라 <b>비즈니스 성과를 만들어내는 운영체계</b>라고 믿습니다.</p>
+        <p>문화 이슈를 직감이 아닌 <b>데이터와 구조로 접근</b>해 왔습니다. 조직의 문제를 진단하고, 리더와 함께 방향을 설정하고, 다양한 직군의 이해관계자·유관부서와 협업해 실질적인 액션으로 이어가는 일을 반복해 왔습니다. 잘 안 됐을 때는 왜 안 됐는지를 먼저 파악하고, 그 원인과 개선 방향을 다음 설계에 반영하는 것이 제 일하는 방식입니다.</p>
+        <p>빠르게 성장하는 조직일수록, 구성원 각자가 무엇을 향해 일하고 있는지를 명확히 알고 몰입할 수 있는 문화적 기반이 필수입니다. 속도가 빨라질수록 방향이 흔들리기 쉽고, 그 방향을 잡아주는 것이 문화의 역할이라고 생각하기 때문입니다. 저는 조직문화를 단순히 구성원의 만족도나 복지로 설명할 수 있는 게 아니라, 구성원이 좋은 결과를 낼 수 있도록 돕는 기준점이자 방향이라고 생각합니다. 토스가 문화를 경쟁력의 핵심으로 바라보는 방식이 그 지점에서 맞닿아 있습니다.</p>
+        <p>두 곳의 인하우스 조직에서 컬처 담당자로 일하면서 온보딩 프로그램, 조직 진단 설문, 전사 커뮤니케이션 구조까지 필요하다고 판단한 것은 직접 설계하고 실행하여 결과를 만들어왔습니다. 그렇기에 토스인컴의 Culture Business Partner 역할이 지금 제가 가장 잘 할 수 있는 일이라고 생각합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="card">
+    <div class="sec-label">Core Skills</div>
+    <div class="info-row">
+      <div class="info-key">조직문화</div>
+      <div class="info-val"><div class="pills">
+        <span class="pill">조직문화 정의·기반 구축</span>
+        <span class="pill">온보딩 설계·고도화</span>
+        <span class="pill">구성원 생애주기 설계</span>
+        <span class="pill">조직진단·VoC 운영</span>
+        <span class="pill">전사 커뮤니케이션</span>
+        <span class="pill">컬처 프로그램 기획·실행</span>
+      </div></div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">HR 운영</div>
+      <div class="info-val"><div class="pills">
+        <span class="pill">정규직 전환 프로세스</span>
+        <span class="pill">교육 프로그램 기획</span>
+        <span class="pill">퇴직 면담·오프보딩</span>
+        <span class="pill">유관부서 협업·조율</span>
+        <span class="pill">리더 어드바이징</span>
+        <span class="pill">데이터 기반 개선</span>
+      </div></div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">Tools</div>
+      <div class="info-val">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; gap:8px; align-items:baseline;">
+            <span class="pill gray" style="flex-shrink:0;">ChatGPT</span>
+            <span style="font-size:11px; color:var(--text-sub); line-height:1.6;">VoC 주관식 응답 주제별 분류, 반복 문서 자동화</span>
+          </div>
+          <div style="display:flex; gap:8px; align-items:baseline;">
+            <span class="pill gray" style="flex-shrink:0;">Claude</span>
+            <span style="font-size:11px; color:var(--text-sub); line-height:1.6;">소프트랜딩 설문·결과지 웹페이지 직접 제작, HR 대시보드 구축, 프로세스 문서 자동화</span>
+          </div>
+          <div style="display:flex; gap:8px; align-items:baseline;">
+            <span class="pill gray" style="flex-shrink:0;">Excel · PPT</span>
+            <span style="font-size:11px; color:var(--text-sub); line-height:1.6;">VoC 데이터 분석·시각화, 타운홀 발표자료·온보딩 가이드 제작</span>
+          </div>
+          <div style="display:flex; gap:8px; align-items:baseline;">
+            <span class="pill gray" style="flex-shrink:0;">ATS</span>
+            <span style="font-size:11px; color:var(--text-sub); line-height:1.6;">채용 프로세스 운영 및 후보자 이력 관리</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label" style="padding:0 4px;">Work Experience</div>
+
+  <!-- SMC -->
+  <div class="exp-card">
+    <div class="exp-header" onclick="toggleAll(this)">
+      <div><div class="exp-co">The SMC</div><div class="exp-period">2025.04 — 재직 중</div></div>
+      <div class="exp-right">
+        <span class="exp-badge">Culture Manager</span>
+        <button class="toggle-btn" onclick="event.stopPropagation(); toggleAll(this.closest('.exp-header'))">전체 펼치기</button>
+      </div>
+    </div>
+    <div class="case-list">
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 01</span>
+          <span class="case-title">합류 초기 경험 설계 — Soft Landing 프로그램</span>
+          <div class="case-pills"><span class="case-pill">매월 15~20명</span><span class="case-pill">조직 연착륙</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">신규 입사자가 입사 후 약 1개월 시점에 업무 부담과 조직 이해 사이에서 어려움을 겪는 경우가 발생했습니다. 합류→적응→성장 단계에 맞는 구분된 프로그램이 없어, 입사 당일 온보딩 이후 구성원이 스스로 적응해야 하는 공백 구간이 존재했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>합류 약 1개월 차 구성원을 대상으로 한 별도 Soft Landing 프로그램 기획</li>
+            <li>회사 비전·조직 방향성 재이해 세션 + 구성원 간 경험 공유·네트워킹 구조로 설계</li>
+            <li>참여자 피드백 수렴 후 지속 개선 프로세스 포함</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>매월 신규 구성원 대상 Soft Landing 세션 운영</li>
+            <li>조직 이해도 향상 세션 및 구성원 간 네트워킹 프로그램 직접 진행</li>
+            <li>참여자 피드백 수렴 후 프로그램 내용 지속 고도화</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>매월 <b>15~20명</b> 신규 구성원 대상 단계별 적응 프로그램 운영</li>
+            <li>프로그램 만족도 <b>4.8/5점</b> 기록</li>
+            <li>합류 초 조직 이해도와 동기부여 향상, 구성원 간 네트워크 형성 및 소속감 강화</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 02</span>
+          <span class="case-title">조직 진단 설계 및 문화 개선 — 사일로 진단에서 액션까지</span>
+          <div class="case-pills"><span class="case-pill">응답률 40%</span><span class="case-pill">만족도 66%↑</span><span class="case-pill">임원 어드바이징</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">회사 내 계열사가 다수 존재하는 구조에서, 사업부 간 목표 공유 없이 각자의 영역에만 집중하는 사일로화 현상이 심화되고 있었습니다. 구성원 의견이 산발적으로 수집되어 조직 차원의 진단이 이루어지지 않았고, 매달 동일 문항 반복으로 인한 형식적 참여도 방지가 필요했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>조직 진단을 위한 전사 설문 문항을 처음부터 직접 제작 — 사일로 이슈를 짚을 수 있는 문항 구조 설계</li>
+            <li>임원과 협업하여 매달 다른 조직 이슈를 다루는 <b>'이달의 질문'</b> 파트 기획</li>
+            <li>초반 3개월 매월 → 이후 격월로 운영 주기 설계</li>
+            <li>낮은 점수 응답자 대상 개별 면담 병행 구조 설계</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>총 6회 운영, 수집 데이터 분석 및 주관식 의견 주제별 분류</li>
+            <li>도출된 특정 조직 이슈를 리더에게 직접 어드바이징</li>
+            <li>유관부서와 이슈 공유하여 환경·복지 개선 액션 설계·실행</li>
+            <li>낮은 점수 응답자와 개별 1on1 면담 직접 진행</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>550~600명 대상 최대 <b>응답률 40%</b> 확보</li>
+            <li>낮은 점수 응답 인원 전월 대비 <b>10명 감소</b></li>
+            <li>기존 낮은 점수 응답자 만족도 <b>평균 66% 개선</b></li>
+            <li>진단→어드바이징→액션으로 이어지는 데이터 기반 개선 사이클 구축</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 03</span>
+          <span class="case-title">전사 소통 채널 설계 — 타운홀·분기 행사의 목적 있는 운영</span>
+          <div class="case-pills"><span class="case-pill">전직원 참여</span><span class="case-pill">리더 협업</span><span class="case-pill">조직 정렬</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">조직 규모가 커지면서 구성원이 회사의 비전과 방향성을 이해하고 자신의 일과 연결할 수 있는 전사 소통 채널이 필요했습니다. 동시에 인턴데이, 명절 행사 등 내부 행사들이 목적 없이 반복되는 이벤트로 소비되지 않도록 각 행사의 문화적 목표를 먼저 정의하는 구조가 필요했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>리더와 함께 각 행사의 <b>조직문화 방향성·목표 공동 정의</b></li>
+            <li>VoC에서 도출된 조직 이슈를 행사 메시지에 반영할 구조 설계</li>
+            <li>타운홀: 경영진 메시지 전달 구조 + 구성원 Q&amp;A 포함 콘텐츠 기획</li>
+            <li>분기 행사: 단순 복지 이벤트가 아닌 조직문화 전달 목적의 행사로 재정의</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>[타운홀] 발표 자료 구성, 구성원 Q&amp;A 프로그램 운영, 리더 어드바이징 결과를 메시지에 반영</li>
+            <li>[분기 행사] 인턴데이·명절 행사 등 기획·운영 전반 담당, 외부 협력사 관리·현장 운영</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li><b>500명 이상</b> 참여 전사 행사 운영</li>
+            <li>타운홀 만족도 조사 결과, "조직 성장 방향을 이해하게 됐다", "평소 궁금했던 것들이 해소됐다", "다른 사업부와 네트워킹할 수 있어 좋았다"는 응답이 주를 이룸</li>
+            <li>분기 행사는 구성원 반응이 공식 채널 아티클로 발행될 만큼 긍정적 반향을 이끌어냄</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 04</span>
+          <span class="case-title">구성원 건강 환경 설계 — VoC 기반 웰니스 프로그램</span>
+          <div class="case-pills"><span class="case-pill">31회 운영</span><span class="case-pill">128명 참여</span><span class="case-pill">만족도 4.8/5</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">VoC 조사 결과 구성원들이 운동 부족과 장시간 근무로 인한 신체 피로를 주요 고충으로 언급했습니다. 업무 몰입도와 구성원 건강을 함께 개선할 수 있는 프로그램이 필요하다는 데이터 기반 근거가 마련되었습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>VoC 분석 결과를 근거로 전사 웰니스 프로그램 기획</li>
+            <li>업무 부담 최소화를 위해 출근 전 시간 활용 구조로 설계</li>
+            <li>자세 교정 중심 스트레칭으로 종목 설정, 전문 강사 섭외 및 주 2회 정기 운영 계획 수립</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>전문 강사와 함께 주 2회 정기 스트레칭 프로그램 운영</li>
+            <li>참여자 관리 및 프로그램 지속 운영</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>총 <b>31회</b> 운영, <b>128명</b> 참여</li>
+            <li>프로그램 만족도 <b>4.8/5점</b> 기록</li>
+            <li>구성원 건강 증진 및 업무 활력 향상 기여</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row fail" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 05</span>
+          <span class="case-title">심리적 안전감 채널 실험 — 실패와 전환</span>
+          <div class="case-pills"><span class="case-pill red">실패 사례</span><span class="case-pill">심리적 안전감</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">문화 관련 공지·개별 알림을 담당자가 직접 발송하면 받는 구성원 입장에서 부담이 될 수 있다고 판단했습니다. 동시에 얼굴을 마주하고 말하기 어려운 의견을 심리적 부담 없이 꺼낼 수 있는 채널이 필요했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>슬랙 내 봇을 활용해 공지·개별 알림 발송 및 익명 의견 수집 구조 설계</li>
+            <li>봇을 통한 소통으로 수신 부담을 줄이고, 정기 VoC와 병행한 실시간 피드백 채널로 활용</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>슬랙 내 익명 의견 수집 봇 직접 기획·도입</li>
+            <li>문화 공지 및 개별 알림을 봇 계정으로 발송하는 방식으로 운영</li>
+          </ul></div></div>
+          <div class="sar-block li" style="border-color: #FFD0D3; background: #FFF0F1;"><div class="sar-label" style="color: var(--red);">교훈 & 개선</div><div class="sar-body"><ul>
+            <li><b>실패 원인:</b> 상대가 봇이라는 인식이 생기자 쌍방향 소통이 이루어지지 않았고, 공지와 알림이 무시되기 시작했습니다. 채널의 편의성보다 <b>관계의 신뢰</b>가 먼저라는 것을 확인했습니다.</li>
+            <li><b>전환:</b> 번거롭더라도 공지·개별 알림을 담당자 개인 계정으로 직접 발송하고, 필요한 경우 면대면 소통으로 전환</li>
+            <li><b>결과:</b> 봇 운영 시 응답률 <b>6%</b> → 개인 계정 전환 후 <b>92%</b>로 개선, 문의사항 직관적 처리 가능</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COUPANG -->
+  <div class="exp-card">
+    <div class="exp-header" onclick="toggleAll(this)">
+      <div><div class="exp-co">Coupang</div><div class="exp-period">2020.11 — 2025.03</div></div>
+      <div class="exp-right">
+        <span class="exp-badge">HRM / HRD</span>
+        <button class="toggle-btn" onclick="event.stopPropagation(); toggleAll(this.closest('.exp-header'))">전체 펼치기</button>
+      </div>
+    </div>
+    <div class="case-list">
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 01</span>
+          <span class="case-title">온보딩 구조화 — 조직 정렬 속도를 높이는 첫 경험 설계</span>
+          <div class="case-pills"><span class="case-pill">누적 1,000명+</span><span class="case-pill">만족도 6.9/7.0</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">대규모 신규 입사자 채용 환경에서 고용 형태(정규직·계약직)에 따라 필요한 정보가 달라 프로그램 구분이 필요했고, 체계적인 구조 없이 진행되던 온보딩으로 인해 신규 입사자가 조직에 안정적으로 연착륙하지 못하는 상황이었습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>정규직·계약직 각각의 특성에 맞는 별도 온보딩 프로그램 구조화 설계</li>
+            <li>조직 이해 및 직무 이해를 위한 교육 콘텐츠 직접 제작</li>
+            <li>만족도 조사를 통한 지속 개선 프로세스 포함</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>입사 첫날 신규 입사자 대상 온보딩 교육 직접 운영</li>
+            <li>만족도 조사 및 피드백 반영하여 프로그램 지속 고도화</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>누적 <b>1,000명 이상</b> 신규 입사자 온보딩 진행</li>
+            <li>온보딩 만족도 <b>3년 연속 6.9/7.0</b> 달성</li>
+            <li>신규 입사자의 조직 정렬 속도 향상 → 단순 문의 감소</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 02</span>
+          <span class="case-title">구성원 강점 기반 배치 설계 — 조직 개편 제안</span>
+          <div class="case-pills"><span class="case-pill">조직 효율성 향상</span><span class="case-pill">현업 자율 기안</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">구성원들과의 면담과 업무 현장을 가까이서 관찰하는 과정에서, 현재 배치가 구성원의 역량·업무 스타일과 맞지 않아 아웃풋이 저하되는 케이스를 발견했습니다. 구성원이 자신의 강점을 발휘하지 못하는 환경은 몰입도 저하와 문화적 이탈로 이어질 수 있다는 판단 아래, 이를 단순 인력 운영이 아닌 <b>조직문화 관점의 문제</b>로 접근했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>정기 면담과 업무 관찰을 통해 구성원별 역량·업무 스타일을 직접 파악, 단순 건의 수행이 아닌 <b>HR이 먼저 전환 배치를 제안</b>하는 방식으로 접근</li>
+            <li>구성원이 자신의 강점을 발휘할 수 있는 자리에 있을 때 몰입도와 성과가 함께 오른다는 관점으로 설계</li>
+            <li>현업에서도 자율적으로 기안할 수 있는 표준 프로세스 도입 계획 수립</li>
+            <li>전환 배치 시 변경되는 계약 사항·근무지·근무 조건 검수 체계 마련</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>조직 내 업무 구조와 구성원 역량을 교차 분석하여 최적 배치 방향 직접 도출, 리더에게 제안</li>
+            <li>변경되는 계약 사항·근무지·근무 조건 검수하여 안정적 이동 지원</li>
+            <li>현업도 쉽게 기안할 수 있도록 표준 프로세스 도입 및 배포</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>전환 배치 후 해당 구성원 생산성 <b>기존 대비 약 3배 향상</b> (60 → 180 capa) — HR 주도 제안의 실효성을 직접 확인</li>
+            <li>프로세스 정립으로 현업의 능동적 인력 관리 가능</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 03</span>
+          <span class="case-title">투명한 성장 경로 설계 — 정규직 전환 프로세스</span>
+          <div class="case-pills"><span class="case-pill">이의 제기 0건</span><span class="case-pill">프로세스 안정화</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">계약직 직원의 정규직 전환 과정에서 평가 기준과 절차가 주관적이고 공식화되지 않아, 평가자마다 기준이 달라지는 문제가 있었습니다. 구성원 입장에서는 어떻게 평가받는지 알 수 없는 구조였고, 이는 몰입도와 동기부여에도 영향을 미칠 수 있는 문제였습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>성과 기반 평가 체계 도입 및 평가 기준·인터뷰 가이드 설계</li>
+            <li>면접관뿐 아니라 <b>입사자에게도 전환 프로세스를 먼저 안내</b>하여 투명하게 운영하는 구조 설계</li>
+            <li>온보딩 세션에서 정규직 전환 기준과 프로세스를 사전 공유하여 구성원이 목표를 갖고 일할 수 있도록 동기부여 포함</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>면접관 교육 진행, 평가 기준·인터뷰 가이드 제공</li>
+            <li>온보딩 세션에서 입사자 대상으로 정규직 전환 프로세스와 평가 기준을 직접 안내 — "이렇게 하면 전환될 수 있다"는 방향을 처음부터 투명하게 공유</li>
+            <li>정규직 전환 프로세스 문서화 후 현업 배포</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>평가 기준 명확화로 프로세스 안정성 확보</li>
+            <li>정규직 전환 과정에서 <b>이의 제기 0건</b> 유지</li>
+            <li>입사 초부터 목표와 기준을 인지한 구성원이 끝까지 몰입할 수 있는 환경 조성</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+      <div class="case-row" onclick="toggleRow(this)">
+        <div class="case-header">
+          <span class="case-num">CASE 04</span>
+          <span class="case-title">좋은 마무리를 설계하는 오프보딩 — 퇴직 경험 관리</span>
+          <div class="case-pills"><span class="case-pill">혼선 감소</span><span class="case-pill">인사이트 체계화</span></div>
+          <span class="case-chevron">▾</span>
+        </div>
+        <div class="case-body">
+          <div class="sar-block ls"><div class="sar-label">진단</div><div class="sar-body">퇴직 과정에서 체계적인 면담 구조가 부족해, 구성원이 어떤 경험을 하고 떠나는지 조직이 파악하지 못하는 상황이었습니다. 퇴직자가 조직에 대한 부정적인 기억을 안고 떠날 경우, 남아있는 구성원의 사기와 조직 이미지 모두에 영향을 미칠 수 있다는 점도 문제로 인식했습니다.</div></div>
+          <div class="sar-block lp"><div class="sar-label">계획</div><div class="sar-body"><ul>
+            <li>퇴직자가 조직에서 좋았던 점과 아쉬웠던 점을 편하게 이야기할 수 있는 면담 구조 설계</li>
+            <li>단순 퇴직 처리가 아니라 <b>퇴직자가 좋은 기억을 갖고 떠날 수 있도록</b> 하는 경험 설계 관점으로 접근</li>
+            <li>수집된 피드백을 현업과 공유하고 이슈를 조정하는 후속 프로세스 포함</li>
+            <li>급여·퇴직금·서류 발급 등 퇴직 절차 가이드 문서화로 혼선 방지</li>
+          </ul></div></div>
+          <div class="sar-block la"><div class="sar-label">실행</div><div class="sar-body"><ul>
+            <li>퇴직 면담에서 조직의 좋았던 점·개선이 필요한 점을 직접 청취, 퇴직자가 충분히 이야기할 수 있는 분위기 형성</li>
+            <li>면담에서 나온 피드백을 현업과 공유하고, 재발 방지를 위한 조정 논의 진행</li>
+            <li>퇴직 절차 가이드 정리 후 배포, 부검 메일 형태의 회고 커뮤니케이션 운영</li>
+          </ul></div></div>
+          <div class="sar-block li"><div class="sar-label">측정</div><div class="sar-body"><ul>
+            <li>연간 평균 <b>약 280명</b> 퇴직 면담 직접 진행</li>
+            <li>면담 피드백을 현업과 공유·조정하여 <b>동일 이슈 재발 방지</b>에 기여</li>
+            <li>퇴직 절차 체계화로 혼선 감소, 인사이트를 조직 운영 및 제도 개선 논의에 활용</li>
+          </ul></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="card">
+    <div class="sec-label">Education</div>
+    <div class="edu-row"><div class="edu-name">중앙대학교 미래교육원</div><div class="edu-detail">심리학과 · 2024 — 재학 중</div></div>
+    <div class="edu-row"><div class="edu-name">용인예술과학대학교</div><div class="edu-detail">디자인과 · 2017 — 2020</div></div>
+  </div>
+
+</div>
+<script>
+function toggleRow(row) {
+  row.classList.toggle('open');
+  updateBtn(row.closest('.exp-card'));
+}
+function toggleAll(header) {
+  const card = header.closest('.exp-card');
+  const rows = card.querySelectorAll('.case-row');
+  const btn = card.querySelector('.toggle-btn');
+  const allOpen = [...rows].every(r => r.classList.contains('open'));
+  rows.forEach(r => allOpen ? r.classList.remove('open') : r.classList.add('open'));
+  if (btn) btn.textContent = allOpen ? '전체 펼치기' : '전체 접기';
+}
+function updateBtn(card) {
+  if (!card) return;
+  const rows = card.querySelectorAll('.case-row');
+  const btn = card.querySelector('.toggle-btn');
+  if (!btn) return;
+  const allOpen = [...rows].every(r => r.classList.contains('open'));
+  btn.textContent = allOpen ? '전체 접기' : '전체 펼치기';
+}
+</script>
+</body>
+</html>
